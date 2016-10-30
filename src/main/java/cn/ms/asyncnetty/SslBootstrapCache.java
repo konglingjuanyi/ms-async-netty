@@ -26,7 +26,8 @@ import com.mastfrog.util.Exceptions;
 final class SslBootstrapCache {
 
     private final Ldr ldr = new Ldr();
-    private final LoadingCache<HostAndPort, Bootstrap> bootstrapForHostPort = CacheBuilder.<HostAndPort, Bootstrap>newBuilder().concurrencyLevel(2).removalListener(ldr).expireAfterAccess(2, TimeUnit.MINUTES).build(ldr);
+    @SuppressWarnings("unused")
+	private final LoadingCache<HostAndPort, Bootstrap> bootstrapForHostPort = CacheBuilder.<HostAndPort, Bootstrap>newBuilder().concurrencyLevel(2).removalListener(ldr).expireAfterAccess(2, TimeUnit.MINUTES).build(ldr);
     private final EventLoopGroup group;
     private final Duration timeout;
     private final SslContext sslContext;

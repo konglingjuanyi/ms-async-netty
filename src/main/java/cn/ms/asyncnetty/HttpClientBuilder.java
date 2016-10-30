@@ -1,12 +1,16 @@
 package cn.ms.asyncnetty;
 
 import com.mastfrog.util.Checks;
+
 import io.netty.channel.ChannelOption;
 import io.netty.handler.ssl.SslContext;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.net.ssl.TrustManager;
+
 import org.joda.time.Duration;
 
 /**
@@ -210,7 +214,8 @@ public final class HttpClientBuilder {
      */
     public <T> HttpClientBuilder setChannelOption(ChannelOption<T> option, T value) {
         for (Iterator<ChannelOptionSetting<?>> it = settings.iterator(); it.hasNext();) {
-            ChannelOptionSetting setting = it.next();
+            @SuppressWarnings("rawtypes")
+			ChannelOptionSetting setting = it.next();
             if (setting.equals(option)) {
                 it.remove();
             }

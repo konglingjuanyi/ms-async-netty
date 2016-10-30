@@ -2,13 +2,16 @@ package cn.ms.asyncnetty;
 
 import com.mastfrog.url.URL;
 import com.mastfrog.util.thread.Receiver;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpContent;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponse;
+
 import java.lang.reflect.Method;
+
 import org.joda.time.Duration;
 
 /**
@@ -80,7 +83,8 @@ public enum StateType {
         return wrapperReceiver(stateValueType(), orig);
     }
 
-    public boolean isResponseComplete() {
+    @SuppressWarnings("incomplete-switch")
+	public boolean isResponseComplete() {
         switch (this) {
             case AwaitingResponse:
             case Connected:
@@ -93,7 +97,8 @@ public enum StateType {
         return true;
     }
 
-    public boolean isFailure() {
+    @SuppressWarnings("incomplete-switch")
+	public boolean isFailure() {
         switch (this) {
             case Cancelled:
             case Closed:
@@ -109,7 +114,8 @@ public enum StateType {
             @Override
             @SuppressWarnings("unchecked")
             public void receive(T object) {
-                Receiver r = orig;
+                @SuppressWarnings("rawtypes")
+				Receiver r = orig;
                 try {
                     r.receive(object);
                 } catch (ClassCastException e) {

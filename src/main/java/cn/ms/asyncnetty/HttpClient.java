@@ -119,6 +119,7 @@ import org.joda.time.Duration;
  *
  * @author lry
  */
+@SuppressWarnings("unused")
 public final class HttpClient {
 
     private final NioEventLoopGroup group;
@@ -276,7 +277,6 @@ public final class HttpClient {
         bootstrap.option(setting.option(), setting.value());
     }
 
-    @SuppressWarnings("unchecked")
     private synchronized Bootstrap start(HostAndPort hostAndPort) {
         if (bootstrap == null) {
             bootstrap = new Bootstrap();
@@ -298,7 +298,6 @@ public final class HttpClient {
         return bootstrap;
     }
 
-    @SuppressWarnings("unchecked")
     private synchronized Bootstrap startSsl(HostAndPort hostAndPort) {
         return sslBootstraps.sslBootstrap(hostAndPort);
     }
@@ -412,7 +411,8 @@ public final class HttpClient {
         }
     }
 
-    private static class NoStackTimeoutException extends TimeoutException {
+    @SuppressWarnings("serial")
+	private static class NoStackTimeoutException extends TimeoutException {
         // Minor optimization - creating the stack trace is expensive if
         // the stack is deep
         NoStackTimeoutException(String msg) {
@@ -558,7 +558,8 @@ public final class HttpClient {
         }
     }
     
-    private ByteBufAllocator alloc() {
+    @SuppressWarnings("deprecation")
+	private ByteBufAllocator alloc() {
         for (ChannelOptionSetting<?> setting : this.settings) {
             if (setting.option().equals(ChannelOption.ALLOCATOR)) {
                 return (ByteBufAllocator) setting.value();
@@ -613,7 +614,7 @@ public final class HttpClient {
         }
 
         @Override
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         public <T> HttpRequestBuilder on(StateType event, Receiver<T> r) {
             super.on((Class<? extends State<T>>) event.type(), (Receiver) event.wrapperReceiver(r));
             return this;
